@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}  library  {% endblock %}
+{% block css %}
+
+#first {
+  height: 616px;
+  width: 100%;
+  background-image: url("{% static 'images/background.jpg' %}");
+  background-size:cover;
+}
+
+{% endblock %}
+
+
+{% block main %}
+
+ <div class="jumbotron text-center" id="first">
+
+     <div style="margin-top:420px;" id="second">
+
+         <h5 style="font-family: 'Press Start 2P', cursive; text-align: center; font-size:40px;color:blue;" >Login</h5>
+
+         <nav class="navbar navbar-expand-sm justify-content-center" id="nav">
+
+             <ul class="nav ">
+                  <li class="nav-item">
+                    <a class="nav-link " href="#" style="font-family: 'Poller One', cursive; font-size:35px;">Student</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#" style="font-family: 'Poller One', cursive; font-size:35px;">Manager</a>
+                  </li>
+             </ul>
+         </nav>
+     </div>
+ </div>
+
+{% endblock %}
