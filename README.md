@@ -18,7 +18,7 @@ _For demo the project_
  
 ### Steps to start with the project 
 
->  1. Fork the project ![alt text](/home/satya/Desktop/Projects/Library/Bootcamp-Fork.png)
+>  1. Fork the project .
 >  2. Now from your github repositories choose library project.
->  3. Clone to the local machine ![alt text](/home/satya/Desktop/Projects/Library/remotes-url.png)
+>  3. Clone to the local machine .
 >  4. Start developing on the local machine.
