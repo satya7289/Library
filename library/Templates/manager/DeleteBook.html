@@ -1,7 +1,8 @@
 {% extends 'layout.html' %}
 {% load static %}
 
-{% block title %}  home  {% endblock %}
+{% block title %}  UpdateBook  {% endblock %}
+
 {% block css %}
 #first {
   height: 400px;
@@ -28,41 +29,9 @@
        padding-bottom:1px;
 }
 
-td {
-    max-width: 100px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-table {
-    width: 100%;
-}
-td {
-    max-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-td.columnA {
-    width: 30%;
-}
-td.columnB {
-    width: 70%;
-}
-
-input {
-    background: transparent;
-    border: none;
-    border-bottom: 2px solid #000000;
-
-}
-
 {% endblock %}
 
 {% block main %}
-
-
 
 <div class="jumbotron text-center" id="first"></div>
 
@@ -70,23 +39,30 @@ input {
 
  <ul class="nav justify-content-end">
   <li class="nav-item">
-    <a class="nav-link " href="#" id="profile">Profile</a>
+    <a class="nav-link " href="#">Profile</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#" id="student">Student</a>
+    <a class="nav-link" href="#">Student</a>
   </li>
    <li   class="nav-item">
-    <a class="nav-link" href="{% url 'book' %}" id="book">Books</a>
+    <a class="nav-link" href="#">Books</a>
   </li>
   <li   class="nav-item">
-    <a class="nav-link" href="#" id="view_order">View Order</a>
+    <a class="nav-link" href="#">View Order</a>
   </li>
 
 </ul>
 
 </nav>
 
-{% block body %} {% endblock %}
+
+<div class="container" style="margin-top:30px; font-family: 'Ubuntu', sans-serif; font-size:20px;"><
+    <form method="post">{% csrf_token %}
+    <p>Are you sure you want to delete "{{ object }}"?</p>
+    <input type="submit" value="Confirm">
+    </form>
+</div>
+
 
 
 

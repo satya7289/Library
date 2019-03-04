@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link  rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        #first {
+  height: 400px;
+  width: 100%;
+  background-image: url("{% static 'images/background.jpg' %}");
+  background-size:cover;
+  margin-bottom:1px;
+
+
+}
+
+.rounded-circle  {
+  vertical-align: middle;
+  width: 200px;
+  height:200px;
+  border-radius: 50%;
+}
+
+ #nav {
+       font-family: 'Caveat', cursive;
+       color: #9999ff;
+       font-size: 30px;
+       background-color: #e6e6ff;
+       padding-bottom:1px;
+}
+
+td {
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+table {
+    width: 100%;
+}
+td {
+    max-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+td.columnA {
+    width: 30%;
+}
+td.columnB {
+    width: 70%;
+}
+    </style>
+    <script>
+        document.addEventListener('Dom
+
+    </script>
+
+      <!fonts>
+      <link href="https://fonts.googleapis.com/css?family=Poller+One|Press+Start+2P" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Ceviche+One" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Caveat" rel="stylesheet">
+
+
+
+
+  </head>
+  <body >
+<div class="jumbotron text-center" id="first"></div>
+
+<nav class="navbar navbar-expand-sm justify-content-center sticky-top" id="nav">
+
+ <ul class="nav justify-content-end">
+  <li class="nav-item">
+    <a class="nav-link " href="#" id="profile">Profile</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#" id="student">Student</a>
+  </li>
+   <li   class="nav-item">
+    <a class="nav-link" href="#" id="book">Books</a>
+  </li>
+  <li   class="nav-item">
+    <a class="nav-link" href="#" id="view_order">View Order</a>
+  </li>
+
+</ul>
+
+</nav>
+
+
+
+<div class="container" style="margin-top:30px; font-family: 'Ubuntu', sans-serif; font-size:20px;">
+      <div class="row" >
+           <div class="col-8" style="word-wrap: break-word;">
+                   <ul class="list-group" >
+                         <li class="list-group-item border-0"><label>Name: &nbsp</label> Satya Prakash Sharma  </li>
+                         <li class="list-group-item border-0"><label>Id: &nbsp</label> MG001 </li>
+                         <li class="list-group-item border-0"><label>Email_Id: &nbsp</label> sharma.20@iitj.ac.in</li>
+                         <li class="list-group-item border-0"><label>Contact_No: &nbsp</label> 9576208007 </li>
+
+                   </ul>
+
+           </div>
+            <div class="col-4" style="word-wrap: break-word;">
+
+                   <img src="{% static 'images/background.jpg' %}" alt="" class="rounded-circle">
+
+            </div>
+
+      </div>
+       <div class="row">
+           <div class=" offset-md-10"><button type="button" class="btn btn-primary" href="#">Update</button></div>
+       </div>
+  </div>
+
+
+
+<hr>
+<div class="container  registration" style="margin-top:30px; font-family: 'Ubuntu', sans-serif; font-size:20px;">
+            <p style="font-size:40px;" class="text-center">Update Profile</p>
+
+                <form method="post" action="#" >
+                    <div class="form-row">
+                         <div class="form-group col-sm-6">
+                            <p> <label for="name">Name &nbsp</label><input id="name"type=text name=name> </p>
+                        </div>
+                         <div class="form-group col-sm-6">
+                             <p><label for="email">Email-id &nbsp</label><input id="email" type=email name=email></p>
+                         </div>
+                        <div class="form-group col-sm-6">
+                            <p>  <label for="branch">Id &nbsp</label><input id="branch" type=text name=branch></p>
+                        </div>
+                         <div class="form-group col-sm-6">
+                             <p> <label for="contact">Contact No &nbsp</label><input id="contact" type=number name=contact></p>
+                         </div>
+                        picture
+                         <div class="form-group col-sm-12">
+                             <p > <button type=submit value=Update>Update</button></p>
+                         </div>
+                    </div>
+                </form>
+</div>
+
+
+
+<hr>
+<div class="container" style="margin-top:30px; font-family: 'Ubuntu', sans-serif; font-size:20px;">
+      <p style="font-size:40px;" class="text-center"><label>Total Students: &nbsp</label> 2 </p>
+
+
+                 <div class="row">
+                     <div class=" offset-md-8">
+                         <form method="post" action="#">
+                            <div class="form-group">
+                                <input type="search" name="search" placeholder="Search">
+                            </div>
+                         </form>
+                     </div>
+                 </div>
+
+
+        <table class="table">
+              <thead>
+                    <tr>
+                      <th scope="col">S.no</th>
+                      <th scope="col">Roll No</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Branch</th>
+                      <th scope="col">Detail</th>
+                      <th scope="col">Update</th>
+                    </tr>
+              </thead>
+              <tbody>
+                   <tr>
+                      <th scope="row">1</th>
+                      <td>Mark</td>
+                      <td>Otto</td>
+                      <td>@mdo</td>
+                      <td>detail</td>
+                      <td>update</td>
+                    </tr>
+                     <tr>
+                      <th scope="row">2</th>
+                      <td>Mark</td>
+                      <td>Otto</td>
+                      <td>@mdo</td>
+                      <td>detail</td>
+                      <td>update</td>
+                    </tr>
+
+              </tbody>
+        </table>
+</div>
+
+
+<hr>
+<div class="container" style="margin-top:50px; font-family: 'Ubuntu', sans-serif; font-size:20px;">
+      <p style="font-size:40px;" class="text-center"><label>Total Books: &nbsp</label> 2 </p>
+
+                 <div class="row">
+                     <div class=" offset-md-8">
+                         <form method="post" action="#">
+                            <div class="form-group">
+                                <input type="search" name="search" placeholder="Search">
+                            </div>
+                         </form>
+                     </div>
+                 </div>
+
+        <table class="table">
+              <thead>
+                    <tr>
+                      <th scope="col">S.no</th>
+                      <th scope="col">Book</th>
+                      <th scope="col">Subject</th>
+                      <th scope="col">Author</th>
+                      <th scope="col">Detail</th>
+                      <th scope="col">current status</th>
+                    </tr>
+              </thead>
+              <tbody>
+                   <tr>
+                      <th scope="row">1</th>
+                      <td>Mark</td>
+                      <td>Otto</td>
+                      <td>@mdo</td>
+                      <td>detail</td>
+                      <td>3/6</td>
+                    </tr>
+                     <tr>
+                      <th scope="row">2</th>
+                      <td>Mark</td>
+                      <td>Otto</td>
+                      <td>@mdo</td>
+                      <td>detail</td>
+                      <td>4/9</td>
+                    </tr>
+
+              </tbody>
+        </table>
+</div>
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
