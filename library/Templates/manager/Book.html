@@ -6,8 +6,9 @@
 
                  <div class="row">
                      <div class=" offset-md-2" >
-                         <form method="post" action="#">
+                         <form method="post" action="{% url 'search_book' %}">
                             <div class="form-group">
+                                {% csrf_token %}
                                 <input type="search" name="search" placeholder="Search">
                             </div>
                          </form>
@@ -16,6 +17,15 @@
                         <a href="{% url 'register_book' %}"> <button id="addbook"  >Add Book</button></a>
                      </div>
                  </div>
+       <div>
+              {% if messages %}
+              <ul class="message">
+                  {% for k in messages %}
+                     <li style="color:red">{{ k }}</li>
+                  {% endfor %}
+              </ul>
+              {% endif %}
+      </div>
 
         <table class="table" style="margin-top:10px;">
               <thead>
