@@ -1,53 +1,61 @@
 {% extends 'manager/home.html' %}
-{% block title %} Student {% endblock %}
+{% block title %} Students List {% endblock %}
 {% block body %}
-
-<div class="container" style="margin-top:30px; font-family: 'Ubuntu', sans-serif; font-size:20px;">
-      <p style="font-size:40px;" class="text-center"><label>Total Students: &nbsp</label> 2 </p>
-
+<div class="container" style="margin-top:1px; font-family: 'Ubuntu', sans-serif; font-size:20px;background-color: #f2f2f2">
+      <p style="font-size:40px;" class="text-center"><label>Total Student: &nbsp</label> {{ students|length }} </p>
 
                  <div class="row">
-                     <div class=" offset-md-8">
+                     <div class=" offset-md-2" >
                          <form method="post" action="#">
                             <div class="form-group">
+                                {% csrf_token %}
                                 <input type="search" name="search" placeholder="Search">
                             </div>
                          </form>
                      </div>
+                     <div class="offset-md-4">
+                        <a href="#"> <button id="addStudent"  >Add Student</button></a>
+                     </div>
                  </div>
+       <div>
+              {% if messages %}
+              <ul class="message">
+                  {% for k in messages %}
+                     <li style="color:red">{{ k }}</li>
+                  {% endfor %}
+              </ul>
+              {% endif %}
+      </div>
 
-
-        <table class="table">
+        <table class="table" style="margin-top:10px;">
               <thead>
                     <tr>
                       <th scope="col">S.no</th>
-                      <th scope="col">Roll No</th>
-                      <th scope="col">Name</th>
+                      <th scope="col"> F_name</th>
                       <th scope="col">Branch</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">MobileNo</th>
                       <th scope="col">Detail</th>
-                      <th scope="col">Update</th>
+
                     </tr>
               </thead>
               <tbody>
+               {% for student in students %}
                    <tr>
                       <th scope="row">1</th>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                      <td>detail</td>
-                      <td>update</td>
+                      <td>{{ student.FirstName }}</td>
+                      <td>{{ student.Branch }}</td>
+                      <td>{{ student.Email }}</td>
+                       <td>{{ student.Mobile }}</td>
+                      <td><a href="#">Detail</a> </td>
+
                     </tr>
-                     <tr>
-                      <th scope="row">2</th>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                      <td>detail</td>
-                      <td>update</td>
-                    </tr>
+               {% endfor %}
 
               </tbody>
         </table>
+
+
 </div>
 
 

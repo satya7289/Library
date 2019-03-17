@@ -4,6 +4,7 @@ from django.views.generic import CreateView, DeleteView, UpdateView, DetailView,
 from django.db.models import Q
 from django.shortcuts import render
 from django.contrib import messages
+from student.models import StudentProfile
 
 
 # Manager Profile Detail View from backend to frontend
@@ -75,7 +76,7 @@ class BookDetail(DetailView):
         template_name = 'manager/BookDetail.html'
         context_object_name = 'book'
         pk_url_kwarg = 'detail_pk'
-        #print(Book.objects.count())
+        # print(Book.objects.count())
 
 
 # Searching Book View
@@ -87,13 +88,13 @@ class Search(View):
         def post(self, request):
                 searchItem = request.POST['search']
                 if searchItem:
-                        #print(searchItem)
+                        # print(searchItem)
                         Books = Book.objects.filter(Q(subject__icontains=searchItem)
                                                     |Q(book_no__icontains=searchItem)
                                                     |Q(title__icontains=searchItem)
                                                     |Q(author__icontains=searchItem)
                                                     |Q(year__icontains=searchItem))
-                       # print(Books)
+                        # print(Books)
                         if Books:
                                 return render(request, 'manager/Book.html', context={'books': Books})
                         messages.error(request, 'Not found')
@@ -101,5 +102,11 @@ class Search(View):
                 return render(request, 'manager/Book.html')
 
 
+# List of all student Register in the web portal
 
+class StudentListView(ListView):
+        model = StudentProfile
+        paginate_by = 20
+        template_name = 'manager/student.html'
+        context_object_name = 'students'
 
