@@ -1,62 +1,9 @@
-{% extends 'layout.html' %}
-{% load static %}
-
-{% block title %}  UpdateBook  {% endblock %}
-
-{% block css %}
-#first {
-  height: 400px;
-  width: 100%;
-  background-image: url("{% static 'images/background.jpg' %}");
-  background-size:cover;
-  margin-bottom:1px;
+{% extends 'manager/home.html' %}
+{% block title %} Delete Book {% endblock %}
+{% block body %}
 
 
-}
-
-.rounded-circle  {
-  vertical-align: middle;
-  width: 200px;
-  height:200px;
-  border-radius: 50%;
-}
-
- #nav {
-       font-family: 'Caveat', cursive;
-       color: #9999ff;
-       font-size: 30px;
-       background-color: #e6e6ff;
-       padding-bottom:1px;
-}
-
-{% endblock %}
-
-{% block main %}
-
-<div class="jumbotron text-center" id="first"></div>
-
-<nav class="navbar navbar-expand-sm justify-content-center sticky-top" id="nav">
-
- <ul class="nav justify-content-end">
-  <li class="nav-item">
-    <a class="nav-link " href="#">Profile</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">Student</a>
-  </li>
-   <li   class="nav-item">
-    <a class="nav-link" href="#">Books</a>
-  </li>
-  <li   class="nav-item">
-    <a class="nav-link" href="#">View Order</a>
-  </li>
-
-</ul>
-
-</nav>
-
-
-<div class="container" style="margin-top:30px; font-family: 'Ubuntu', sans-serif; font-size:20px;"><
+<div class="container" style="margin-top:30px; font-family: 'Ubuntu', sans-serif; font-size:20px;">
     <form method="post">{% csrf_token %}
     <p>Are you sure you want to delete "{{ object }}"?</p>
     <input type="submit" value="Confirm">

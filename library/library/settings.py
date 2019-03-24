@@ -71,7 +71,10 @@ TEMPLATES = [
     },
 ]
 
+
+AUTH_USER_MODEL = 'account.User'
 WSGI_APPLICATION = 'library.wsgi.application'
+
 
 
 # Database
@@ -129,3 +132,13 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+
+# LOGIN_REDIRECT_URL = 'home'
+#
+# LOGOUT_REDIRECT_URL = 'home'
+#
+

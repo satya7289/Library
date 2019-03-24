@@ -10,8 +10,12 @@
              <a href="{% url 'update_book' update_pk=book.id %}"> <button>Update Detail</button></a>
           </div>
           <div class="offset-md-0">
+             <a href="{% url 'delete_book' delete_pk=book.id %}"> <button  >Delete</button></a>
+          </div>
+          <div class="offset-md-0">
              <a href="#"> <button  >History</button></a>
           </div>
+
         </div>
 
         <div class="form-group col-sm-10">

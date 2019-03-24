@@ -63,7 +63,7 @@ td.columnB {
 
  <ul class="nav justify-content-end">
   <li class="nav-item">
-    <a class="nav-link " href="{% url 'student_profile' pk=1 %}">Profile</a>
+    <a class="nav-link " href="{% url 'student_profile' %}">Profile</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="#">Search</a>
@@ -74,6 +74,11 @@ td.columnB {
   <li   class="nav-item">
     <a class="nav-link" href="#">Books</a>
   </li>
+     {% if user.is_authenticated %}
+   <li class="nav-item">
+    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+  </li>
+     {% endif %}
 
 </ul>
 

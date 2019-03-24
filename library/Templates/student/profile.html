@@ -12,19 +12,18 @@
                </div>
            <div class="col-8" style="word-wrap: break-word;">
 
-                                   <p ><label>First Name: &nbsp</label> {{ profile.FirstName }}  </p>
-      {%  if profile.MiddleName %} <p ><label>Middle Name: &nbsp</label> {{ profile.MiddleName }}</p>{% endif %}
-                                   <p ><label>Last Name: &nbsp</label> {{ profile.LastName }}</p>
-         {%  if profile.Branch %}  <p ><label>Branch : &nbsp</label>{{ profile.Branch }}</p>{% endif %}
-            {% if profile.RollNo %}<p ><label>RollNo : &nbsp</label>{{ profile.RollNo }}</p>{% endif %}
-                                   <p ><label>Email  : &nbsp</label>{{ profile.Email }}</p>
-                                   <p ><label>MobileNo : &nbsp</label>{{ profile.Mobile }}</p>
+      {%  if profile.first_name %} <p ><label>First Name: &nbsp</label> {{ profile.first_name }}  </p>{%endif%}
+      {%  if profile.last_name %}  <p ><label>Last Name: &nbsp</label> {{ profile.LastName }}</p>   {% endif %}
+      {%  if profile.branch %}     <p ><label>Branch : &nbsp</label>{{ profile.branch }}</p>        {% endif %}
+      {% if profile.roll_no %}     <p ><label>RollNo : &nbsp</label>{{ profile.roll_no }}</p>       {% endif %}
+      {%  if profile.email %}      <p ><label>Email  : &nbsp</label>{{ profile.email }}</p>         {% endif %}
+       {%  if profile.mobile_no %}     <p ><label>MobileNo : &nbsp</label>{{ profile.mobile_no }}</p>   {% endif %}
 
 
            </div>
             <div class="col-4" style="word-wrap: break-word;">
-                      {% if profile.profilePicture %}
-                   <img src="/media/{{profile.profilePicture}} " alt="" class="rounded-circle">
+                      {% if profile.profile_pic %}
+                   <img src="/media/{{profile.profile_pic }} " alt="" class="rounded-circle">
                      {% else %}
                    <img src="{% static 'images/background.jpg' %}" alt="" class="rounded-circle">
                      {% endif %}

@@ -25,19 +25,19 @@ class Book(models.Model):
     def __str__(self):
         return '%d %s' % (self.book_no, self.subject)
 
-
-class ManagerProfile(models.Model):
-    name = models.CharField(max_length=30)
-    college_id = models.CharField(max_length=50)
-    email = models.EmailField()
-    mobile_no = models.CharField(max_length=12)
-    year = models.IntegerField(choices=year_choice, default=datetime.datetime.now().year)
-    profile_picture = models.ImageField(upload_to='manager/profile/%Y/%m/%d/', verbose_name='Insert_Profile_picture',
-                                        blank=True, null=True)
-
-    def __str__(self):
-        return '%s' % self.name
-
+#
+# class ManagerProfile(models.Model):
+#     name = models.CharField(max_length=30)
+#     college_id = models.CharField(max_length=50)
+#     email = models.EmailField()
+#     mobile_no = models.CharField(max_length=12)
+#     year = models.IntegerField(choices=year_choice, default=datetime.datetime.now().year)
+#     profile_picture = models.ImageField(upload_to='manager/profile/%Y/%m/%d/', verbose_name='Insert_Profile_picture',
+#                                         blank=True, null=True)
+#
+#     def __str__(self):
+#         return '%s' % self.name
+#
 
 
 

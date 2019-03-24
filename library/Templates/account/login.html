@@ -34,16 +34,29 @@ input {
 
  <div class="jumbotron text-center" id="first">
      <div class="container login" id="student" >
-         <form method="post" action="#">
-                <p style="font-size:60px;">Student Login</p>
+         <form method="post" action="">
+                <!--<p style="font-size:60px;">Student Login</p>-->
                 <div class="form-group" >
                     {% csrf_token %}
-                <p><label>Username &nbsp</label><input type=text name=username>
-                <p><label>Password &nbsp</label><input type=password name=password >
+                <!--<p><label>Username &nbsp</label><input type=text name=username>-->
+                <!--<p><label>Password &nbsp</label><input type=password name=password >-->
+                     {% for field in form %}
+                            <p> <label >{{ field.label_tag }} &nbsp</label> {{ field }}</p>
+                        </div>
+                     {% endfor %}
                 <p>
                     <button type=submit value=Login>Login</button>
-                    <button > <a href="{% url 'registration' %}"> Registration</a></button>
+                    <button > <a href="{% url 'student_signup' %}"> Registration</a></button>
                 </p>
+                      <div>
+              {% if messages %}
+                  <ul class="message">
+                      {% for k in messages %}
+                         <li style="color:red">{{ k }}</li>
+                      {% endfor %}
+                  </ul>
+              {% endif %}
+      </div>
             </div>
         </form>
         </div>

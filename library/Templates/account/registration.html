@@ -30,39 +30,21 @@ input {
  <div class="jumbotron text-center" id="first">
 
         <div class="container  registration" >
-            <p style="font-size:60px;">Student Registration</p>
+            <p style="font-size:60px;">{{ user_type }} Registration</p>
 
-                <form method="post" action="#" >
+                <form method="post" action="" enctype="multipart/form-data" >
                     {% csrf_token %}
                     <div class="form-row">
-                         <div class="form-group col-sm-6">
-                            <p> <label for="name">Name &nbsp</label><input id="name"type=text name=name> </p>
+                 {% csrf_token %}
+                {% for field in form %}
+                         <div class="form-group col-sm-10">
+                            <p> <label >{{ field.label_tag }} &nbsp</label> {{ field }} </p>
                         </div>
-                         <div class="form-group col-sm-6">
-                            <p>  <label for="branch">Branch &nbsp</label><input id="branch" type=text name=branch></p>
-                        </div>
-                         <div class="form-group col-sm-6">
-                             <p> <label for="roll">Roll-no &nbsp</label><input id="roll" type=text name=roll_no> </p>
-                         </div>
-                         <div class="form-group col-sm-6">
-                             <p><label for="email">Email-id &nbsp</label><input id="email" type=email name=email></p>
-                         </div>
-                         <div class="form-group col-sm-6">
-                             <p> <label for="contact">Contact No &nbsp</label><input id="contact" type=number name=contact></p>
-                         </div>
-                         <div class="form-group col-sm-6">
-                             <p><label for="session">Session &nbsp</label><input id="session" type=number name=session></p>
-                         </div>
-                         <div class="form-group col-sm-6">
-                             <p> <label for="password">Password &nbsp</label><input id="password" type=password name=password></p>
-                         </div>
-                         <div class="form-group col-sm-6">
-                             <p><label for="repeat">Repeat</label><input id="repeat" type=password name=confirm_password></p>
-                         </div>
-                         <div class="form-group col-sm-12">
-                             <p > <button type=submit value=Register>Register</button></p>
-                         </div>
-                    </div>
+                {% endfor %}
+           </div>
+
+         <div class="offset-md-10">
+             <p > <button type=submit value="save">Save</button></p>
                 </form>
 
 

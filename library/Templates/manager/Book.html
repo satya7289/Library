@@ -41,7 +41,7 @@
               <tbody>
                {% for book in books %}
                    <tr>
-                      <th scope="row">1</th>
+                      <th scope="row">{{ forloop.counter }}</th>
                       <td>{{ book.book_no }}</td>
                       <td>{{ book.subject }}</td>
                       <td>{{ book.title }}</td>

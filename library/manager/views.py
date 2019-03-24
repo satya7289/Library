@@ -1,51 +1,68 @@
 from django.urls import reverse_lazy
-from .models import Book, ManagerProfile
 from django.views.generic import CreateView, DeleteView, UpdateView, DetailView, ListView, View
 from django.db.models import Q
 from django.shortcuts import render
 from django.contrib import messages
-from student.models import StudentProfile
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+
+
+from .models import Book
+from account.decorator import manager_required
+from account.models import Manager, User, Student
 
 
 # Manager Profile Detail View from backend to frontend
-class ManagerProfileDetail(DetailView):
-        model = ManagerProfile
-        context_object_name = 'profile'
-        pk_url_kwarg = 'manager_pk'
-        template_name = 'manager/profile.html'
+@method_decorator([login_required, manager_required], name='dispatch')
+class ManagerProfile(View):
+    template_name = 'manager/profile.html'
+
+    def get(self, request, *args, **kwargs):
+        username = request.user.username
+        user = User.objects.get(username=username)
+        manager = Manager.objects.get(user=user)
+        profile = {'username': user.username, 'first_name': user.first_name, 'last_name': user.last_name,
+                   'email': user.email, 'college_id': manager.CollegeId, 'mobile_no': manager.MobileNo,
+                   'year': manager.Year, 'profile_pic': manager.ProfilePicture
+                   }
+        # print(profile)
+        return render(request, self.template_name, {'profile': profile})
 
 
 # Updating Manager Profile Detail View from frontend to backend
-class ManagerProfileUpdate(UpdateView):
-        model = ManagerProfile
-        fields = ['name', 'college_id', 'email', 'mobile_no', 'year']
-        template_name = 'manager/updateProfile.html'
-        pk_url_kwarg = 'manager_pk'
-
-        def get_success_url(self):
-                pk = self.kwargs['manager_pk']
-                return reverse_lazy('manager_profile', kwargs={'manager_pk': pk})
+# not working
+# class ManagerProfileUpdate(UpdateView):
+#         model = ManagerProfile
+#         fields = ['name', 'college_id', 'email', 'mobile_no', 'year']
+#         template_name = 'manager/updateProfile.html'
+#         pk_url_kwarg = 'manager_pk'
+#
+#         def get_success_url(self):
+#                 pk = self.kwargs['manager_pk']
+#                 return reverse_lazy('manager_profile', kwargs={'manager_pk': pk})
 
 
 # updating Profile Picture
 # not working now
-class UpdateProfilePicture(UpdateView):
-        model = ManagerProfile
-        fields = [' profile_picture']
-        template_name = 'manager/updateProfile.html'
-        pk_url_kwarg = 'manager_pk'
-        success_url = reverse_lazy('manager_profile')
+# class UpdateProfilePicture(UpdateView):
+#         model = ManagerProfile
+#         fields = [' profile_picture']
+#         template_name = 'manager/updateProfile.html'
+#         pk_url_kwarg = 'manager_pk'
+#         success_url = reverse_lazy('manager_profile')
 
 
 # Registering/creating Book View via frontend to backend
+@method_decorator([login_required, manager_required], name='dispatch')
 class RegisterBook(CreateView):
         model = Book
         fields = ['book_no', 'subject', 'title', 'author', 'total', 'year']
         template_name = 'manager/createBook.html'
-        success_url = reverse_lazy('manager_home')
+        success_url = reverse_lazy('book')
 
 
 # Updating Book View via frontend to backend
+@method_decorator([login_required, manager_required], name='dispatch')
 class UpdateBook(UpdateView):
         model = Book
         fields = ['book_no', 'subject', 'title', 'author', 'total', 'year']
@@ -55,14 +72,16 @@ class UpdateBook(UpdateView):
 
 
 # Deletion of Book View via frontend to backend
+@method_decorator([login_required, manager_required], name='dispatch')
 class DeleteBook(DeleteView):
         model = Book
         pk_url_kwarg = 'delete_pk'
         template_name = 'manager/DeleteBook.html'
-        success_url = reverse_lazy('manager_home')
+        success_url = reverse_lazy('book')
 
 
 # Listing of Book View from backend to frontend
+@method_decorator([login_required, manager_required], name='dispatch')
 class BookList(ListView):
         model = Book
         paginate_by = 20
@@ -71,6 +90,7 @@ class BookList(ListView):
 
 
 # Detail of Book View from backend to frontend
+@method_decorator([login_required, manager_required], name='dispatch')
 class BookDetail(DetailView):
         model = Book
         template_name = 'manager/BookDetail.html'
@@ -80,6 +100,7 @@ class BookDetail(DetailView):
 
 
 # Searching Book View
+@method_decorator([login_required, manager_required], name='dispatch')
 class Search(View):
 
         def get(self, request):
@@ -103,9 +124,9 @@ class Search(View):
 
 
 # List of all student Register in the web portal
-
+@method_decorator([login_required, manager_required], name='dispatch')
 class StudentListView(ListView):
-        model = StudentProfile
+        model = Student
         paginate_by = 20
         template_name = 'manager/student.html'
         context_object_name = 'students'

@@ -70,7 +70,7 @@ input {
 
  <ul class="nav justify-content-end">
   <li class="nav-item">
-    <a class="nav-link " href="{% url 'manager_profile' manager_pk=1 %}" id="profile">Profile</a>
+    <a class="nav-link " href="{% url 'manager_profile' %}" id="profile">Profile</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="{% url 'studentList' %}" id="student">Student</a>
@@ -81,6 +81,11 @@ input {
   <li   class="nav-item">
     <a class="nav-link" href="#" id="view_order">View Order</a>
   </li>
+     {% if user.is_authenticated %}
+   <li class="nav-item">
+    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+  </li>
+     {% endif %}
 
 </ul>
 
