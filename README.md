@@ -6,14 +6,16 @@ _For demo the project_
  
    > 1. `git clone https://github.com/satya7289/Library.git`
    > 2.  `cd library`
-   > 3.  `python3 manage.py runserver`
+   > 3.  `pip3 install requirements.txt`
+   > 4.  `python3 manage.py runserver`
  
 
 ##### for windows
 
    > 1. `git clone https://github.com/satya7289/Library.git`
    > 2.  `cd library`
-   > 3.  `python manage.py runserver`
+   > 3.  `pip3 install requirements.txt`
+   > 4.  `python manage.py runserver`
  
  
 ### Steps to start with the project 
