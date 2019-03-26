@@ -1,5 +1,5 @@
 {% extends 'manager/home.html' %}
-{% block title %} Book Detail {% endblock %}
+{% block title %} Student Detail {% endblock %}
 {% block body %}
 
 
@@ -8,12 +8,6 @@
         <div class="row">
           <div class="offset-md-8">
              <a href="{% url 'update_book' update_pk=book.id %}"> <button>Update Detail</button></a>
-          </div>
-          <div class="offset-md-0">
-             <a href="{% url 'delete_book' delete_pk=book.id %}"> <button  >Delete</button></a>
-          </div>
-          <div class="offset-md-0">
-             <a href="#"> <button  >History</button></a>
           </div>
 
         </div>

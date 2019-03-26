@@ -12,5 +12,5 @@ urlpatterns = [
     path('manager/', include('manager.urls')),
 
     # api for book
-    path('api/manager/', include('manager.api_urls')),
+    path('api/', include('manager.api_urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

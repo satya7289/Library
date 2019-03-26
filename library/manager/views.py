@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from django.db import connection
 
 
 from .models import Book
@@ -126,8 +127,57 @@ class Search(View):
 # List of all student Register in the web portal
 @method_decorator([login_required, manager_required], name='dispatch')
 class StudentListView(ListView):
+
+        def my_custom_sql(self):
+            cursor = connection.cursor()
+            cursor.execute("SELECT username, first_name, last_name, email,"
+                           "Branch, RollNo, MobileNo, ProfilePicture "
+                           "FROM account_user JOIN account_student "
+                           "ON account_student.user_id=account_user.id")
+            row = cursor.fetchall()
+            return row
+
+        model = User
+        queryset = my_custom_sql(model)
         model = Student
         paginate_by = 20
         template_name = 'manager/student.html'
         context_object_name = 'students'
+        #print(queryset)
+
+
+@method_decorator([login_required, manager_required], name='dispatch')
+class StudentDetailView(DetailView):
+    pass
+
+
+@method_decorator([login_required, manager_required], name='dispatch')
+class SearchStudentView(View):
+
+    def get(self, request):
+        return render(request, 'manager/student.html')
+
+    def my_custom_sql(self, search):
+        cursor = connection.cursor()
+        cursor.execute("SELECT username, first_name, last_name, email,"
+                       "Branch, RollNo, MobileNo, ProfilePicture "
+                       "FROM account_user JOIN account_student "
+                       "ON account_student.user_id=account_user.id "
+                       "WHERE Branch LIKE %s OR username LIKE %s OR MobileNo LIKE %s",
+                       ['%' + search + '%', '%' + search + '%', '%' + search + '%'])
+        row = cursor.fetchall()
+        return row
+
+    def post(self, request):
+        searchItem = request.POST['search']
+        if searchItem:
+            students = self.my_custom_sql(searchItem)
+            # print(students)
+            if students:
+                return render(request, 'manager/student.html', context={'students': students})
+            messages.error(request, 'Not found')
+        messages.error(request, 'Search by username, email, Branch')
+        return render(request, 'manager/student.html')
+
+
 
