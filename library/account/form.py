@@ -11,8 +11,8 @@ from .models import Student, Manager, branch, year_choice
 class StudentSignUpForm(UserCreationForm):
     Branch = forms.ChoiceField(choices=branch, required=False)
     RollNo = forms.CharField(max_length=10,)
-    MobileNo = forms.CharField(max_length=12)
-    profilePicture = forms.ImageField(required=False)
+    MobileNo = forms.CharField(max_length=12, required=True)
+    ProfilePicture = forms.ImageField(required=False)
 
     class Meta(UserCreationForm.Meta):
         model = User
@@ -27,7 +27,7 @@ class StudentSignUpForm(UserCreationForm):
         student.Branch = self.cleaned_data.get('Branch')
         student.RollNo = self.cleaned_data.get('RollNo')
         student.MobileNo = self.cleaned_data.get('MobileNo')
-        student.ProfilePicture = self.cleaned_data('ProfilePicture')
+        student.ProfilePicture = self.cleaned_data['ProfilePicture']
         student.save()
         return user
 

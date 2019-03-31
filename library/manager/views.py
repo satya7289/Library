@@ -1,16 +1,18 @@
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, UpdateView, DetailView, ListView, View
 from django.db.models import Q
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.db import connection
+from django.http import Http404
 
 
 from .models import Book
 from account.decorator import manager_required
 from account.models import Manager, User, Student
+from .forms import UpdateManagerProfile
 
 
 # Manager Profile Detail View from backend to frontend
@@ -30,27 +32,49 @@ class ManagerProfile(View):
         return render(request, self.template_name, {'profile': profile})
 
 
-# Updating Manager Profile Detail View from frontend to backend
-# not working
-# class ManagerProfileUpdate(UpdateView):
-#         model = ManagerProfile
-#         fields = ['name', 'college_id', 'email', 'mobile_no', 'year']
-#         template_name = 'manager/updateProfile.html'
-#         pk_url_kwarg = 'manager_pk'
-#
-#         def get_success_url(self):
-#                 pk = self.kwargs['manager_pk']
-#                 return reverse_lazy('manager_profile', kwargs={'manager_pk': pk})
+# Update Manager Profile View
+@method_decorator([login_required, manager_required], name='dispatch')
+class ManagerUpdateProfile(View):
+    template_name = 'manager/updateProfile.html'
+    form_class = UpdateManagerProfile
 
+    def my_custom_sql(self, username):
+        cursor = connection.cursor()
+        cursor.execute("SELECT first_name,last_name,email,"
+                       "CollegeId, MobileNo, Year, ProfilePicture FROM account_user JOIN account_manager ON"
+                       " account_manager.user_id = account_user.id WHERE username=%s", [username]
+                       )
+        row = cursor.fetchone()
+        return row
 
-# updating Profile Picture
-# not working now
-# class UpdateProfilePicture(UpdateView):
-#         model = ManagerProfile
-#         fields = [' profile_picture']
-#         template_name = 'manager/updateProfile.html'
-#         pk_url_kwarg = 'manager_pk'
-#         success_url = reverse_lazy('manager_profile')
+    def get(self, request):
+        username = request.user.username
+        # print(username)
+        user = self.my_custom_sql(username)
+        if user:
+            form = self.form_class(initial={'First_name': user[0], 'Last_name': user[1], 'Email': user[2],
+                                            'CollegeId': user[3], 'MobileNo': user[4], 'Year': user[5],
+                                            'ProfilePicture': user[6]})
+            return render(request, self.template_name, {'form': form})
+        return render(self.template_name, self.form_class)
+
+    def post(self, request):
+        username = request.user.username
+        user = User.objects.get(username=username)
+        manager = Manager.objects.get(user=user)
+        # print(username)
+        form = self.form_class(request.POST, request.FILES)
+        if form.is_valid():
+            user.first_name = form.cleaned_data.get('First_name')
+            user.last_name = form.cleaned_data.get('Last_name')
+            user.email = form.cleaned_data.get('Email')
+            manager.CollegeId = form.cleaned_data.get('CollegeId')
+            manager.Year = form.cleaned_data.get('Year')
+            manager.MobileNo = form.cleaned_data.get('MobileNo')
+            manager.ProfilePicture = form.cleaned_data.get('ProfilePicture')
+            user.save()
+            manager.save()
+            return redirect('manager_profile')
 
 
 # Registering/creating Book View via frontend to backend
@@ -139,18 +163,37 @@ class StudentListView(ListView):
 
         model = User
         queryset = my_custom_sql(model)
-        model = Student
         paginate_by = 20
         template_name = 'manager/student.html'
         context_object_name = 'students'
         #print(queryset)
 
 
+# detail of individual students
 @method_decorator([login_required, manager_required], name='dispatch')
-class StudentDetailView(DetailView):
-    pass
+class StudentDetailView(View):
+    template_name = 'manager/studentDetail.html'
+
+    def my_custom_sql(self,username):
+        cursor = connection.cursor()
+        cursor.execute("SELECT username, first_name, last_name, email,"
+                       "Branch, RollNo, MobileNo, ProfilePicture "
+                       "FROM account_user JOIN account_student "
+                       "ON account_student.user_id=account_user.id"
+                       "WHERE username=%s", [username])
+        row = cursor.fetchone()
+        return row
+
+    def get(self, request, *args, **kwargs):
+        # username = request.GET.get('username', None)
+        # student = self.my_custom_sql(username)
+        # if student:
+        #     return render(request, self.template_name, {'profile': student})
+        # raise Http404
+        pass
 
 
+# search student on manager side
 @method_decorator([login_required, manager_required], name='dispatch')
 class SearchStudentView(View):
 
@@ -178,6 +221,3 @@ class SearchStudentView(View):
             messages.error(request, 'Not found')
         messages.error(request, 'Search by username, email, Branch')
         return render(request, 'manager/student.html')
-
-
-

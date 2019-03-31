@@ -2,8 +2,7 @@ from django.urls import path
 from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
 
-from .views import StudentProfile
-
+from .views import StudentProfile, StudentUpdateProfile
 
 urlpatterns = [
     path('', login_required(TemplateView.as_view(template_name='student/home.html'), login_url='login'), name='home'),
@@ -13,4 +12,5 @@ urlpatterns = [
     # path('updateProfile/<int:pk>/', StudentUpdateProfile.as_view(), name='student_UpdateProfile'),
 
     path('profile/', StudentProfile.as_view(), name='student_profile'),
+    path('updateProfile/', StudentUpdateProfile.as_view(), name='student_profile_update'),
 ]

@@ -1,7 +1,7 @@
 from django.urls import path
 from django.views.generic import TemplateView
 from .views import RegisterBook, UpdateBook, DeleteBook, BookList, BookDetail, ManagerProfile, Search, StudentListView,\
-    SearchStudentView
+    SearchStudentView, ManagerUpdateProfile, StudentDetailView
 
 
 urlpatterns = [
@@ -15,10 +15,8 @@ urlpatterns = [
     path('book/', BookList.as_view(), name='book'),
 
     # Manager update and profile
-    # path('managerProfile/<int:manager_pk>/', ManagerProfileDetail.as_view(), name='manager_profile'),
-    # path('managerUpdateProfile/<int:manager_pk>/', ManagerProfileUpdate.as_view(), name='manager_UpdateProfile'),
-
     path('profile/', ManagerProfile.as_view(), name='manager_profile'),
+    path('updateProfile/', ManagerUpdateProfile.as_view(), name='manager_update_profile'),
 
     # search book
     path('searchBook', Search.as_view(), name='search_book'),
@@ -26,6 +24,7 @@ urlpatterns = [
     # student list
     path('studentList/', StudentListView.as_view(), name='studentList'),
     path('searchStudent/', SearchStudentView.as_view(), name='search_student'),
+    # path('student/detail/(?P<username>\w{0,50})/$', StudentDetailView.as_view(), name='student_detail'),
 
 
 ]

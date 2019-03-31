@@ -4,25 +4,31 @@
 
 
 <div class="container" style="margin-top:1px; font-family: 'Ubuntu', sans-serif; font-size:20px;background-color: #f2f2f2">
-      <p style="font-size:40px;" class="text-center"> Book Detail </p>
-        <div class="row">
-          <div class="offset-md-8">
-             <a href="{% url 'update_book' update_pk=book.id %}"> <button>Update Detail</button></a>
-          </div>
+       <div class="row" >
+               <div class="offset-md-10">
+                       <a href="#"> <button type="button"  >Update</button></a>
+               </div>
+           <div class="col-8" style="word-wrap: break-word;">
 
-        </div>
-
-        <div class="form-group col-sm-10">
-          <p> <label > Book No : &nbsp</label> {{ book.book_no }} </p>
-          <p> <label > Subject : &nbsp</label> {{ book.subject }} </p>
-          <p> <label > Title  : &nbsp</label> {{ book.title }}</p>
-          <p> <label > Author : &nbsp</label> {{ book.author }}</p>
-          <p> <label > Year : &nbsp</label> {{ book.year }} </p>
-          <p> <label > Total : &nbsp</label> {{ book.total }} </p>
-        </div>
+      {%  if profile.first_name %} <p ><label>First Name: &nbsp</label> {{ profile.first_name }}  </p>{%endif%}
+      {%  if profile.last_name %}  <p ><label>Last Name: &nbsp</label> {{ profile.last_name }}</p>   {% endif %}
+      {%  if profile.branch %}     <p ><label>Branch : &nbsp</label>{{ profile.branch }}</p>        {% endif %}
+      {% if profile.roll_no %}     <p ><label>RollNo : &nbsp</label>{{ profile.roll_no }}</p>       {% endif %}
+      {%  if profile.email %}      <p ><label>Email  : &nbsp</label>{{ profile.email }}</p>         {% endif %}
+       {%  if profile.mobile_no %}     <p ><label>MobileNo : &nbsp</label>{{ profile.mobile_no }}</p>   {% endif %}
 
 
+           </div>
+            <div class="col-4" style="word-wrap: break-word;">
+                      {% if profile.profile_pic %}
+                   <img src="/media/{{profile.profile_pic }} " alt="" class="rounded-circle">
+                     {% else %}
+                   <img src="{% static 'images/background.jpg' %}" alt="" class="rounded-circle">
+                     {% endif %}
 
+            </div>
+
+      </div>
 
 </div>
 

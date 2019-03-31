@@ -1,5 +1,5 @@
 {% extends 'student/home.html' %}
-{% block title %} Student UpdateProfile {% endblock %}
+{% block title %} Student Update Profile {% endblock %}
 {% block body %}
 {% load static %}
 
@@ -9,8 +9,9 @@
 
 <div class="container" style="margin-top:1px; font-family: 'Ubuntu', sans-serif; font-size:20px; background-color: #f2f2f2">
     <p style="font-size:40px;" class="text-center"><u>Update Profile</u></p>
-     <form method="post">
-            <div class="form-row">
+        <form method="post" action="" enctype="multipart/form-data" >
+
+                    <div class="form-row">
                  {% csrf_token %}
                 {% for field in form %}
                          <div class="form-group col-sm-6">
@@ -19,10 +20,11 @@
                 {% endfor %}
            </div>
 
-         <div class="offset-md-10">
-             <p > <button type=submit value="save">Save</button></p>
-         </div>
-    </form>
+             <div class="offset-md-10">
+                 <p > <button type=submit value="save">Save</button></p>
+             </div>
+        </form>
+
 </div>
 
 

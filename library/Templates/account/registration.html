@@ -27,17 +27,17 @@ input {
 {% endblock %}
 
 {% block main %}
- <div class="jumbotron text-center" id="first">
+ <div class="jumbotron text-center" id="first" >
 
-        <div class="container  registration" >
+<!--        <div class="container  registration" >-->
+            <div class="container " >
             <p style="font-size:60px;">{{ user_type }} Registration</p>
 
                 <form method="post" action="" enctype="multipart/form-data" >
-                    {% csrf_token %}
                     <div class="form-row">
                  {% csrf_token %}
                 {% for field in form %}
-                         <div class="form-group col-sm-10">
+                         <div class="form-group col-sm-6">
                             <p> <label >{{ field.label_tag }} &nbsp</label> {{ field }} </p>
                         </div>
                 {% endfor %}
