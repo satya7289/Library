@@ -4,18 +4,22 @@ _For demo the project_
 
 ##### for ubuntu/linux
  
-   > 1. `git clone https://github.com/satya7289/Library.git`
+   > 1.  `git clone https://github.com/satya7289/Library.git`
    > 2.  `cd library`
    > 3.  `pip3 install requirements.txt`
-   > 4.  `python3 manage.py runserver`
+   > 4.  `python3 manage.py makemigrations`
+   > 5.  `python3 manage.py migrate`
+   > 6.  `python3 manage.py runserver`
  
 
 ##### for windows
 
-   > 1. `git clone https://github.com/satya7289/Library.git`
+   > 1.  `git clone https://github.com/satya7289/Library.git`
    > 2.  `cd library`
    > 3.  `pip3 install requirements.txt`
-   > 4.  `python manage.py runserver`
+   > 4.  `python manage.py makemigrations`
+   > 5.  `python manage.py migrate`
+   > 6.  `python manage.py runserver`
  
  
 ### Steps to start with the project 
@@ -24,3 +28,7 @@ _For demo the project_
 >  2. Now from your github repositories choose library project.
 >  3. Clone to the local machine .
 >  4. Start developing on the local machine.
+
+### SuperUser credentaials
+###### username: `s`
+###### password: `123123`
