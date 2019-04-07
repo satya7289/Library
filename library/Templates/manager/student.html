@@ -6,16 +6,15 @@
 
                  <div class="row">
                      <div class=" offset-md-2" >
-                         <form method="post" action="{% url 'search_student' %}">
-                            <div class="form-group">
-                                {% csrf_token %}
-                                <input type="search" name="search" placeholder="Search">
-                            </div>
+                         <form method="GET" action="{% url 'search_student' %}">
+
+                             <input type="search" name="search" placeholder="Search", value="{{ request.GET.search }}">
+
                          </form>
                      </div>
-                     <div class="offset-md-4">
-                        <a href="#"> <button id="addStudent"  >Add Student</button></a>
-                     </div>
+<!--                     <div class="offset-md-4">-->
+<!--                        <a href="#"> <button id="addStudent"  >Add Student</button></a>-->
+<!--                     </div>-->
                  </div>
        <div>
               {% if messages %}
@@ -30,7 +29,7 @@
         <table class="table" style="margin-top:10px;">
               <thead>
                     <tr>
-                      <th scope="col">S.no</th>
+<!--                      <th scope="col">S.no</th>-->
                       <th scope="col"> Username</th>
                       <th scope="col">Branch</th>
                       <th scope="col">Email</th>
@@ -42,7 +41,7 @@
               <tbody>
                {% for student in students %}
                    <tr>
-                      <th scope="row">{{ forloop.counter }}</th>
+<!--                      <th scope="row">{{ forloop.counter }}</th>-->
                       <td>{{ student.0 }}</td>
                       <td>{{ student.4 }}</td>
                       <td>{{ student.3 }}</td>
@@ -54,6 +53,54 @@
 
               </tbody>
         </table>
+
+     <div class="offset-md-6">
+        {% if is_paginated %}
+          <ul class="pagination">
+            {% if page_obj.has_previous %}
+              <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+            {% else %}
+              <li class="disabled"><span>&laquo;</span></li>
+            {% endif %}
+            {% for i in paginator.page_range %}
+              {% if page_obj.number == i %}
+                <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+              {% else %}
+                <li><a href="?page={{ i }}">{{ i }}</a></li>
+              {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+              <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+            {% else %}
+              <li class="disabled"><span>&raquo;</span></li>
+            {% endif %}
+          </ul>
+      {% endif %}
+    </div>
+    <div class="offset-md-6">
+         {% if students.has_other_pages %}
+              <ul class="pagination">
+                {% if students.has_previous %}
+                  <li><a href="?page={{ students.previous_page_number }}&search={{ request.GET.search }}">&laquo;</a></li>
+                {% else %}
+                  <li class="disabled"><span>&laquo;</span></li>
+                {% endif %}
+                {% for i in students.paginator.page_range %}
+                  {% if students.number == i %}
+                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                  {% else %}
+                    <li><a href="?page={{ i }}&search={{ request.GET.search }}">{{ i }}</a></li>
+                  {% endif %}
+                {% endfor %}
+                {% if students.has_next %}
+                  <li><a href="?page={{ students.next_page_number }}&search={{ request.GET.search }}">&raquo;</a></li>
+                {% else %}
+                  <li class="disabled"><span>&raquo;</span></li>
+                {% endif %}
+              </ul>
+        {% endif %}
+    </div>
+
 </div>
 
 

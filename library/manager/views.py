@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.db import connection
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import Http404
 
 
@@ -109,7 +110,7 @@ class DeleteBook(DeleteView):
 @method_decorator([login_required, manager_required], name='dispatch')
 class BookList(ListView):
         model = Book
-        paginate_by = 20
+        paginate_by = 5
         template_name = 'manager/Book.html'
         context_object_name = 'books'
 
@@ -124,28 +125,40 @@ class BookDetail(DetailView):
         # print(Book.objects.count())
 
 
+
+
 # Searching Book View
 @method_decorator([login_required, manager_required], name='dispatch')
 class Search(View):
+        template_name = 'manager/Book.html'
+        paginated_by = 5
+        context_name = 'books'
+
+        def pagination(self, object):
+            paginator = Paginator(object, self.paginate_by)
+            page = self.request.GET.get('page')
+            try:
+                Search = paginator.page(page)
+            except PageNotAnInteger:
+                Search = paginator.page(1)
+            except EmptyPage:
+                Search = paginator.page(paginator.num_pages)
+            return render(self.request, self.template_name, context={self.context_name: Search})
 
         def get(self, request):
-                return render(request, 'manager/Book.html')
-
-        def post(self, request):
-                searchItem = request.POST['search']
-                if searchItem:
-                        # print(searchItem)
-                        Books = Book.objects.filter(Q(subject__icontains=searchItem)
-                                                    |Q(book_no__icontains=searchItem)
-                                                    |Q(title__icontains=searchItem)
-                                                    |Q(author__icontains=searchItem)
-                                                    |Q(year__icontains=searchItem))
-                        # print(Books)
-                        if Books:
-                                return render(request, 'manager/Book.html', context={'books': Books})
-                        messages.error(request, 'Not found')
+            searchItem = request.GET.get('search')
+            if(searchItem == ""):
                 messages.error(request, 'Search by Book_no,Subject,Title,Author or Year')
-                return render(request, 'manager/Book.html')
+            if searchItem:
+                Query_List = Book.objects.filter(Q(subject__icontains=searchItem)
+                                                | Q(book_no__icontains=searchItem)
+                                                | Q(title__icontains=searchItem)
+                                                | Q(author__icontains=searchItem)
+                                                | Q(year__icontains=searchItem))
+                if Query_List:
+                    return self.pagination(Query_List)
+                messages.error(request, 'Not found')
+            return render(request, self.template_name)
 
 
 # List of all student Register in the web portal
@@ -163,7 +176,7 @@ class StudentListView(ListView):
 
         model = User
         queryset = my_custom_sql(model)
-        paginate_by = 20
+        paginate_by = 5
         template_name = 'manager/student.html'
         context_object_name = 'students'
         #print(queryset)
@@ -174,7 +187,7 @@ class StudentListView(ListView):
 class StudentDetailView(View):
     template_name = 'manager/studentDetail.html'
 
-    def my_custom_sql(self,username):
+    def my_custom_sql(self, username):
         cursor = connection.cursor()
         cursor.execute("SELECT username, first_name, last_name, email,"
                        "Branch, RollNo, MobileNo, ProfilePicture "
@@ -196,9 +209,9 @@ class StudentDetailView(View):
 # search student on manager side
 @method_decorator([login_required, manager_required], name='dispatch')
 class SearchStudentView(View):
-
-    def get(self, request):
-        return render(request, 'manager/student.html')
+    template_name = 'manager/student.html'
+    paginated_by = 5
+    context_name = 'students'
 
     def my_custom_sql(self, search):
         cursor = connection.cursor()
@@ -211,13 +224,24 @@ class SearchStudentView(View):
         row = cursor.fetchall()
         return row
 
-    def post(self, request):
-        searchItem = request.POST['search']
+    def pagination(self, object):
+        paginator = Paginator(object, self.paginate_by)
+        page = self.request.GET.get('page')
+        try:
+            Search = paginator.page(page)
+        except PageNotAnInteger:
+            Search = paginator.page(1)
+        except EmptyPage:
+            Search = paginator.page(paginator.num_pages)
+        return render(self.request, self.template_name, context={self.context_name: Search})
+
+    def get(self, request):
+        searchItem = request.GET.get('search')
+        if (searchItem == ""):
+            messages.error(request, 'Search by username, email, Branch')
         if searchItem:
-            students = self.my_custom_sql(searchItem)
-            # print(students)
-            if students:
-                return render(request, 'manager/student.html', context={'students': students})
+            Query_List = self.my_custom_sql(searchItem)
+            if Query_List:
+                return self.pagination(Query_List)
             messages.error(request, 'Not found')
-        messages.error(request, 'Search by username, email, Branch')
-        return render(request, 'manager/student.html')
+        return render(request, self.template_name)

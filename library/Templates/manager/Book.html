@@ -6,11 +6,10 @@
 
                  <div class="row">
                      <div class=" offset-md-2" >
-                         <form method="post" action="{% url 'search_book' %}">
-                            <div class="form-group">
-                                {% csrf_token %}
-                                <input type="search" name="search" placeholder="Search">
-                            </div>
+                         <form method='GET' action="{% url 'search_book' %}">
+
+                             <input type="search" name="search" placeholder="Search" value="{{ request.GET.search }}">
+
                          </form>
                      </div>
                      <div class="offset-md-4">
@@ -30,7 +29,7 @@
         <table class="table" style="margin-top:10px;">
               <thead>
                     <tr>
-                      <th scope="col">S.no</th>
+<!--                      <th scope="col">S.no</th>-->
                       <th scope="col">Book_No</th>
                       <th scope="col">Subject</th>
                       <th scope="col">Title</th>
@@ -41,7 +40,7 @@
               <tbody>
                {% for book in books %}
                    <tr>
-                      <th scope="row">{{ forloop.counter }}</th>
+<!--                      <th scope="row">{{ forloop.counter }}</th>-->
                       <td>{{ book.book_no }}</td>
                       <td>{{ book.subject }}</td>
                       <td>{{ book.title }}</td>
@@ -52,7 +51,52 @@
 
               </tbody>
         </table>
-
+    <div class="offset-md-6">
+        {% if is_paginated %}
+          <ul class="pagination">
+            {% if page_obj.has_previous %}
+              <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+            {% else %}
+              <li class="disabled"><span>&laquo;</span></li>
+            {% endif %}
+            {% for i in paginator.page_range %}
+              {% if page_obj.number == i %}
+                <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+              {% else %}
+                <li><a href="?page={{ i }}">{{ i }}</a></li>
+              {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+              <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+            {% else %}
+              <li class="disabled"><span>&raquo;</span></li>
+            {% endif %}
+          </ul>
+      {% endif %}
+    </div>
+    <div class="offset-md-6">
+         {% if books.has_other_pages %}
+              <ul class="pagination">
+                {% if books.has_previous %}
+                  <li><a href="?page={{ books.previous_page_number }}&search={{ request.GET.search }}">&laquo;</a></li>
+                {% else %}
+                  <li class="disabled"><span>&laquo;</span></li>
+                {% endif %}
+                {% for i in books.paginator.page_range %}
+                  {% if books.number == i %}
+                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                  {% else %}
+                    <li><a href="?page={{ i }}&search={{ request.GET.search }}">{{ i }}</a></li>
+                  {% endif %}
+                {% endfor %}
+                {% if books.has_next %}
+                  <li><a href="?page={{ books.next_page_number }}&search={{ request.GET.search }}">&raquo;</a></li>
+                {% else %}
+                  <li class="disabled"><span>&raquo;</span></li>
+                {% endif %}
+              </ul>
+        {% endif %}
+    </div>
 
 </div>
 
