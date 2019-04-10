@@ -1,33 +1,29 @@
 {% extends 'manager/home.html' %}
 {% block title %} Student Detail {% endblock %}
 {% block body %}
+{% load static %}
 
 
 <div class="container" style="margin-top:1px; font-family: 'Ubuntu', sans-serif; font-size:20px;background-color: #f2f2f2">
        <div class="row" >
-               <div class="offset-md-10">
-                       <a href="#"> <button type="button"  >Update</button></a>
-               </div>
-           <div class="col-8" style="word-wrap: break-word;">
-
-      {%  if profile.first_name %} <p ><label>First Name: &nbsp</label> {{ profile.first_name }}  </p>{%endif%}
-      {%  if profile.last_name %}  <p ><label>Last Name: &nbsp</label> {{ profile.last_name }}</p>   {% endif %}
-      {%  if profile.branch %}     <p ><label>Branch : &nbsp</label>{{ profile.branch }}</p>        {% endif %}
-      {% if profile.roll_no %}     <p ><label>RollNo : &nbsp</label>{{ profile.roll_no }}</p>       {% endif %}
-      {%  if profile.email %}      <p ><label>Email  : &nbsp</label>{{ profile.email }}</p>         {% endif %}
-       {%  if profile.mobile_no %}     <p ><label>MobileNo : &nbsp</label>{{ profile.mobile_no }}</p>   {% endif %}
+           <div class="col-8 mt-3" style="word-wrap: break-word; ">
+               {%  if profile.1 %}   <h5 ><label>First Name: &nbsp</label> <span class="text-muted">{{ profile.1 }} </span> </h5>{%endif%}
+               {%  if profile.2 %}   <h5 ><label>Last Name: &nbsp</label> <span class="text-muted">{{ profile.2 }}</span></h5>   {% endif %}
+               {%  if profile.4 %}   <h5 ><label>Branch : &nbsp</label><span class="text-muted">{{ profile.4 }}</span></h5>        {% endif %}
+               {% if profile.5 %}    <h5 ><label>RollNo : &nbsp</label><span class="text-muted">{{ profile.5 }}</span></h5>       {% endif %}
+               {%  if profile.3 %}   <h5 ><label>Email  : &nbsp</label><span class="text-muted">{{ profile.3 }}</span></h5>         {% endif %}
+               {%  if profile.6 %}  <h5 ><label>MobileNo : &nbsp</label><span class="text-muted">{{ profile.6 }}</span></h5>   {% endif %}
 
 
            </div>
-            <div class="col-4" style="word-wrap: break-word;">
-                      {% if profile.profile_pic %}
-                   <img src="/media/{{profile.profile_pic }} " alt="" class="rounded-circle">
+             <div class="col-4 mt-3" style="word-wrap: break-word;">
+                      {% if profile.7 %}
+                   <img src="/media/{{profile.7}} " alt="" class="rounded-circle">
                      {% else %}
                    <img src="{% static 'images/background.jpg' %}" alt="" class="rounded-circle">
                      {% endif %}
 
             </div>
-
       </div>
 
 </div>

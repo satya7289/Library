@@ -12,12 +12,12 @@
                </div>
            <div class="col-8" style="word-wrap: break-word;">
 
-      {%  if profile.first_name %} <p ><label>First Name: &nbsp</label> {{ profile.first_name }}  </p>{%endif%}
-      {%  if profile.last_name %}  <p ><label>Last Name: &nbsp</label> {{ profile.last_name }}</p>   {% endif %}
-      {%  if profile.branch %}     <p ><label>Branch : &nbsp</label>{{ profile.branch }}</p>        {% endif %}
-      {% if profile.roll_no %}     <p ><label>RollNo : &nbsp</label>{{ profile.roll_no }}</p>       {% endif %}
-      {%  if profile.email %}      <p ><label>Email  : &nbsp</label>{{ profile.email }}</p>         {% endif %}
-       {%  if profile.mobile_no %}     <p ><label>MobileNo : &nbsp</label>{{ profile.mobile_no }}</p>   {% endif %}
+               {%  if profile.first_name %} <h5 ><label>First Name: &nbsp</label> <span class="text-muted"> {{ profile.first_name }}</span>  </h5>{%endif%}
+               {%  if profile.last_name %}  <h5 ><label>Last Name: &nbsp</label> <span class="text-muted"> {{ profile.last_name }}</span></h5>   {% endif %}
+               {%  if profile.branch %}     <h5 ><label>Branch : &nbsp</label><span class="text-muted"> {{ profile.branch }}</span></h5>        {% endif %}
+               {% if profile.roll_no %}     <h5 ><label>RollNo : &nbsp</label><span class="text-muted"> {{ profile.roll_no }}</span></h5>       {% endif %}
+               {%  if profile.email %}      <h5 ><label>Email  : &nbsp</label><span class="text-muted"> {{ profile.email }}</span></h5>         {% endif %}
+               {%  if profile.mobile_no %}  <h5 ><label>MobileNo : &nbsp</label><span class="text-muted"> {{ profile.mobile_no }}</span></h5>   {% endif %}
 
 
            </div>
@@ -35,3 +35,4 @@
   </div>
 
 {% endblock %}
+

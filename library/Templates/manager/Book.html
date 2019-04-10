@@ -8,7 +8,7 @@
                      <div class=" offset-md-2" >
                          <form method='GET' action="{% url 'search_book' %}">
 
-                             <input type="search" name="search" placeholder="Search" value="{{ request.GET.search }}">
+                             <input type="search" name="q" placeholder="Search" value="{{ request.GET.q }}">
 
                          </form>
                      </div>
@@ -78,7 +78,7 @@
          {% if books.has_other_pages %}
               <ul class="pagination">
                 {% if books.has_previous %}
-                  <li><a href="?page={{ books.previous_page_number }}&search={{ request.GET.search }}">&laquo;</a></li>
+                  <li><a href="?page={{ books.previous_page_number }}&q={{ request.GET.q }}">&laquo;</a></li>
                 {% else %}
                   <li class="disabled"><span>&laquo;</span></li>
                 {% endif %}
@@ -86,11 +86,11 @@
                   {% if books.number == i %}
                     <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
                   {% else %}
-                    <li><a href="?page={{ i }}&search={{ request.GET.search }}">{{ i }}</a></li>
+                    <li><a href="?page={{ i }}&q={{ request.GET.q }}">{{ i }}</a></li>
                   {% endif %}
                 {% endfor %}
                 {% if books.has_next %}
-                  <li><a href="?page={{ books.next_page_number }}&search={{ request.GET.search }}">&raquo;</a></li>
+                  <li><a href="?page={{ books.next_page_number }}&q={{ request.GET.q }}">&raquo;</a></li>
                 {% else %}
                   <li class="disabled"><span>&raquo;</span></li>
                 {% endif %}

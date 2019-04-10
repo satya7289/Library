@@ -3,6 +3,8 @@
 
 {% block title %} home  {% endblock %}
 {% block css %}
+
+
 #first {
   height: 400px;
   width: 100%;
@@ -66,7 +68,7 @@ td.columnB {
     <a class="nav-link " href="{% url 'student_profile' %}">Profile</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Search</a>
+    <a class="nav-link" href="{% url 'search' %}">Search</a>
   </li>
    <li   class="nav-item">
     <a class="nav-link" href="#">Checkout</a>

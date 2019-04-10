@@ -146,7 +146,7 @@ class Search(View):
             return render(self.request, self.template_name, context={self.context_name: Search})
 
         def get(self, request):
-            searchItem = request.GET.get('search')
+            searchItem = request.GET.get('q')
             if(searchItem == ""):
                 messages.error(request, 'Search by Book_no,Subject,Title,Author or Year')
             if searchItem:
@@ -161,49 +161,58 @@ class Search(View):
             return render(request, self.template_name)
 
 
-# List of all student Register in the web portal
-@method_decorator([login_required, manager_required], name='dispatch')
-class StudentListView(ListView):
-
-        def my_custom_sql(self):
-            cursor = connection.cursor()
-            cursor.execute("SELECT username, first_name, last_name, email,"
-                           "Branch, RollNo, MobileNo, ProfilePicture "
-                           "FROM account_user JOIN account_student "
-                           "ON account_student.user_id=account_user.id")
-            row = cursor.fetchall()
-            return row
-
-        model = User
-        queryset = my_custom_sql(model)
-        paginate_by = 5
-        template_name = 'manager/student.html'
-        context_object_name = 'students'
-        #print(queryset)
-
-
 # detail of individual students
 @method_decorator([login_required, manager_required], name='dispatch')
-class StudentDetailView(View):
-    template_name = 'manager/studentDetail.html'
+class StudentListAndDetailView(View):
 
-    def my_custom_sql(self, username):
+    context_name = 'students'
+    template_name = 'manager/student.html'
+    template_name_two = 'manager/studentDetail.html'
+    model = User
+    paginate_by = 5
+
+
+    def pagination(self, object):
+        paginator = Paginator(object, self.paginate_by)
+        page = self.request.GET.get('page')
+        try:
+            Search = paginator.page(page)
+        except PageNotAnInteger:
+            Search = paginator.page(1)
+        except EmptyPage:
+            Search = paginator.page(paginator.num_pages)
+        return render(self.request, self.template_name, context={self.context_name: Search})
+
+
+    def my_custom_sql(self):
         cursor = connection.cursor()
         cursor.execute("SELECT username, first_name, last_name, email,"
                        "Branch, RollNo, MobileNo, ProfilePicture "
                        "FROM account_user JOIN account_student "
-                       "ON account_student.user_id=account_user.id"
-                       "WHERE username=%s", [username])
+                       "ON account_student.user_id=account_user.id")
+        row = cursor.fetchall()
+        return row
+
+    def my_custom_sql_two(self, username):
+        cursor = connection.cursor()
+        cursor.execute("SELECT username, first_name, last_name, email,"
+                       "Branch, RollNo, MobileNo, ProfilePicture "
+                       "FROM account_user JOIN account_student "
+                       "ON account_student.user_id=account_user.id WHERE username=%s", [username])
         row = cursor.fetchone()
         return row
 
+
+
     def get(self, request, *args, **kwargs):
-        # username = request.GET.get('username', None)
-        # student = self.my_custom_sql(username)
-        # if student:
-        #     return render(request, self.template_name, {'profile': student})
-        # raise Http404
-        pass
+        username = request.GET.get('username')
+        student = self.my_custom_sql_two(username)
+        # print(student)
+        if student:
+            return render(request, self.template_name_two, {'profile': student})
+        students = self.my_custom_sql()
+        # print(students)
+        return self.pagination(students)
 
 
 # search student on manager side
@@ -212,6 +221,7 @@ class SearchStudentView(View):
     template_name = 'manager/student.html'
     paginated_by = 5
     context_name = 'students'
+    paginate_by = 5
 
     def my_custom_sql(self, search):
         cursor = connection.cursor()
@@ -236,7 +246,7 @@ class SearchStudentView(View):
         return render(self.request, self.template_name, context={self.context_name: Search})
 
     def get(self, request):
-        searchItem = request.GET.get('search')
+        searchItem = request.GET.get('q')
         if (searchItem == ""):
             messages.error(request, 'Search by username, email, Branch')
         if searchItem:

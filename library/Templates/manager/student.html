@@ -8,7 +8,7 @@
                      <div class=" offset-md-2" >
                          <form method="GET" action="{% url 'search_student' %}">
 
-                             <input type="search" name="search" placeholder="Search", value="{{ request.GET.search }}">
+                             <input type="search" name="q" placeholder="Search", value="{{ request.GET.q }}">
 
                          </form>
                      </div>
@@ -46,7 +46,7 @@
                       <td>{{ student.4 }}</td>
                       <td>{{ student.3 }}</td>
                        <td>{{ student.6 }}</td>
-                      <td><a href="#">Detail</a> </td>
+                      <td><a href="?username={{ student.0 }}">Detail</a> </td>
 
                     </tr>
                {% endfor %}
@@ -54,34 +54,34 @@
               </tbody>
         </table>
 
-     <div class="offset-md-6">
-        {% if is_paginated %}
-          <ul class="pagination">
-            {% if page_obj.has_previous %}
-              <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
-            {% else %}
-              <li class="disabled"><span>&laquo;</span></li>
-            {% endif %}
-            {% for i in paginator.page_range %}
-              {% if page_obj.number == i %}
-                <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-              {% else %}
-                <li><a href="?page={{ i }}">{{ i }}</a></li>
-              {% endif %}
-            {% endfor %}
-            {% if page_obj.has_next %}
-              <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
-            {% else %}
-              <li class="disabled"><span>&raquo;</span></li>
-            {% endif %}
-          </ul>
-      {% endif %}
-    </div>
+<!--     <div class="offset-md-6">-->
+<!--        {% if is_paginated %}-->
+<!--          <ul class="pagination">-->
+<!--            {% if page_obj.has_previous %}-->
+<!--              <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>-->
+<!--            {% else %}-->
+<!--              <li class="disabled"><span>&laquo;</span></li>-->
+<!--            {% endif %}-->
+<!--            {% for i in paginator.page_range %}-->
+<!--              {% if page_obj.number == i %}-->
+<!--                <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>-->
+<!--              {% else %}-->
+<!--                <li><a href="?page={{ i }}">{{ i }}</a></li>-->
+<!--              {% endif %}-->
+<!--            {% endfor %}-->
+<!--            {% if page_obj.has_next %}-->
+<!--              <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>-->
+<!--            {% else %}-->
+<!--              <li class="disabled"><span>&raquo;</span></li>-->
+<!--            {% endif %}-->
+<!--          </ul>-->
+<!--      {% endif %}-->
+<!--    </div>-->
     <div class="offset-md-6">
          {% if students.has_other_pages %}
               <ul class="pagination">
                 {% if students.has_previous %}
-                  <li><a href="?page={{ students.previous_page_number }}&search={{ request.GET.search }}">&laquo;</a></li>
+                  <li><a href="?page={{ students.previous_page_number }}&q={{ request.GET.q }}">&laquo;</a></li>
                 {% else %}
                   <li class="disabled"><span>&laquo;</span></li>
                 {% endif %}
@@ -89,11 +89,11 @@
                   {% if students.number == i %}
                     <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
                   {% else %}
-                    <li><a href="?page={{ i }}&search={{ request.GET.search }}">{{ i }}</a></li>
+                    <li><a href="?page={{ i }}&q={{ request.GET.q }}">{{ i }}</a></li>
                   {% endif %}
                 {% endfor %}
                 {% if students.has_next %}
-                  <li><a href="?page={{ students.next_page_number }}&search={{ request.GET.search }}">&raquo;</a></li>
+                  <li><a href="?page={{ students.next_page_number }}&q={{ request.GET.q }}">&raquo;</a></li>
                 {% else %}
                   <li class="disabled"><span>&raquo;</span></li>
                 {% endif %}
