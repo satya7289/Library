@@ -13,6 +13,7 @@ from django.template import RequestContext
 from account.decorator import student_required
 from account.models import Student, Manager, User
 from manager.models import Book
+from .models import Cart
 from .form import UpdateProfile
 
 
@@ -79,7 +80,6 @@ class StudentUpdateProfile(View):
             student.save()
             return redirect('student_profile')
 
-
 class SearchBook(View):
     template_name = 'student/search.html'
     paginate_by = 2
@@ -135,26 +135,22 @@ class SearchBook(View):
         return render(request, self.template_name)  # search by appropriate query and return
 
 
+@method_decorator([login_required, student_required, ], name='dispatch')
+class AddToCartView(View):
 
+    def my_custom_sql(self, book_id, student):
+        cursor = connection.cursor()
+        cursor.execute()
+        row = cursor.fetchall()
+        return row
 
-
-
-
-
-
-
-# class AddToCartView(View):
-#     pass
-#
-#
-# class CheckOutView(View):
-#     pass
-#
-#
-# class CheckInView(View):
-#     pass
-#
-#
+    def get(self, request, *args, **kwargs):    # check whether current user have previous cart and have not checkout
+        bookId = kwargs['book_id']              # then add this book to the cart
+        user = request.user
+        user_id = request.user.id
+        student = Student.objects.get(user=user)
+        # self.my_custom_sql(bookId, student)
+        return HttpResponse('fdhb')
 
 
 

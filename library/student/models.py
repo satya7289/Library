@@ -1,24 +1,18 @@
+import datetime
 from django.db import models
 
-#
-# branch = [('CSE', 'Computer Science and Engineering'),
-#           ('Electrical', 'Electrical Engineering'),
-#           ('Mechanical', 'Mechanical Engineering'),
-#           ('Biotechnology', 'BioTechnology Engineering')]
-#
-#
-# class StudentProfile(models.Model):
-#     FirstName = models.CharField(max_length=15)
-#     MiddleName = models.CharField(blank=True, null=True, max_length=15)
-#     LastName = models.CharField(max_length=15)
-#     Branch = models.CharField(choices=branch, blank=True, null=True, default='CSE', max_length=25)
-#     RollNo = models.CharField(max_length=10, blank=True, null=True)
-#     Email = models.EmailField()
-#     Mobile = models.CharField(max_length=12)
-#     profilePicture = models.ImageField(upload_to='student/profile/%Y/%m/%d/', blank=True, null=True)
-#
-#     class Meta:
-#         ordering = ["FirstName"]
-#
-#     def __str__(self):
-#         return '%s' % self.FirstName
+from account.models import Student, User
+from manager.models import Book
+
+
+class Cart(models.Model):
+    Book = models.ManyToManyField(Book)
+    CheckIn = models.BooleanField(default=False)
+    CheckOut = models.BooleanField(default=False)
+    CheckInTime = models.DateField(blank=True, null=True)
+    CheckOutTime = models.DateField(blank=True, null=True)
+    User = models.ForeignKey(Student, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.UserId.user.username
+

@@ -87,6 +87,7 @@ class RegisterBook(CreateView):
         success_url = reverse_lazy('book')
 
 
+
 # Updating Book View via frontend to backend
 @method_decorator([login_required, manager_required], name='dispatch')
 class UpdateBook(UpdateView):
