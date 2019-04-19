@@ -5,35 +5,118 @@
 {% block css %}
 
 #first {
-  height: 616px;
+  height: 670px;
   width: 100%;
-  background-image: url("{% static 'images/background.jpg' %}");
+  background-image: url("{% static 'images/frontPage.jpg' %}");
   background-size:cover;
 }
+#search {
+        margin-top:130px;
+        padding:50px;
+        padding-bottom:120px;
+        padding-left: 110px;
+        font-family: 'Poller One', cursive;
+        font-size: 30px;
 
 {% endblock %}
 
 
 {% block main %}
 
- <div class="jumbotron text-center" id="first">
+ <div id="first">
 
-     <div style="margin-top:420px;" id="second">
+         <nav class="navbar " >
 
-         <h5 style="font-family: 'Press Start 2P', cursive; text-align: center; font-size:40px;color:blue;" >Login</h5>
-
-         <nav class="navbar navbar-expand-sm justify-content-center" id="nav">
-
-             <ul class="nav ">
-                  <li class="nav-item">
-                    <a class="nav-link " href="{% url 'login' %}" style="font-family: 'Poller One', cursive; font-size:35px;">Student</a>
+             <ul class="nav " style = "margin-left:70%;">
+                  <li class="nav-item ">
+                    <a class="navbar-brand" href="{% url 'login' %}" style="font-family: 'Poller One', cursive; font-size:35px;">SignIn</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}" style="font-family: 'Poller One', cursive; font-size:35px;">Manager</a>
+                    <a class="navbar-brand" href="{% url 'student_signup' %}" style="font-family: 'Poller One', cursive; font-size:35px;">SignUp</a>
                   </li>
              </ul>
          </nav>
+     <div class="container col-sm-6" id="search" >
+
+        <form method='GET' action="{% url 'search' %}">
+                <input type="search" name="q" placeholder="Search Book" >
+        </form>
+         <div>
+              {% if messages %}
+                  <ul class="message">
+                      {% for k in messages %}
+                         <li style="color:red">{{ k }}</li>
+                      {% endfor %}
+                  </ul>
+              {% endif %}
+         </div>
      </div>
+     <div class="row justify-content-start">
+        <div class="col-2">
+        </div>
+        <div class="col-10">
+            {% for book in books %}
+                 <div class="card ml-5 mt-1" style="max-width: 800px;">
+                      <div class="row no-gutters">
+                            <div class="col-md-4">
+                                 <div class="container">
+                                    {% if book.CoverPicture  %}
+                                       <img src="/media/{{book.CoverPicture }} " alt="" class="img-thumbnail card-img mt-2">
+                                         {% else %}
+                                       <img src="{% static 'images/background.jpg' %}" alt="" class="img-thumbnail card-img mt-2">
+                                     {% endif %}
+                                     {% if book.BookPDF  %}
+                                         <div style="margin-left:40%;"><span>{{ book.BookPDF}}</span></div>
+                                     {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                              <div class="card-body">
+<!--                                <h5 class="card-title"></h5>-->
+                                  <h5 class="card-text ml-3">Book_No: <span class="text-muted">{{ book.book_no }}</span></h5>
+                                  <h5 class="card-text ml-3">Subject: <span class="text-muted">{{ book.subject }}</span></h5>
+                                  <h5 class="card-text ml-3">Title: <span class="text-muted">{{ book.title }}</span></h5>
+                                  <h5 class="card-text ml-3">Author: <span class="text-muted">{{ book.author }}</span></h5>
+                                  <h5 class="card-text ml-3">Total Book: <span class="text-muted">{{ book.total }}</span></h5>
+                                  <h5 class="card-text ml-3">Year: <span class="text-muted">{{ book.year }}</span></h5>
+                               <div class="offset-md-8">
+                                    <a href="{% url 'cart' book_id=book.id %}"> <button type="button"  >AddToCart</button></a>
+                               </div>
+                              </div>
+                            </div>
+                      </div>
+                </div>
+            {% endfor %}
+
+         </div>
+     </div>
+
+     <div class="offset-md-6">
+         {% if books.has_other_pages %}
+              <ul class="pagination">
+                {% if books.has_previous %}
+                  <li><a href="?page={{ books.previous_page_number }}&q={{ request.GET.q }}">&laquo;</a></li>
+                {% else %}
+                  <li class="disabled"><span>&laquo;</span></li>
+                {% endif %}
+                {% for i in books.paginator.page_range %}
+                  {% if books.number == i %}
+                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                  {% else %}
+                    <li><a href="?page={{ i }}&q={{ request.GET.q }}">{{ i }}</a></li>
+                  {% endif %}
+                {% endfor %}
+                {% if books.has_next %}
+                  <li><a href="?page={{ books.next_page_number }}&q={{ request.GET.q }}">&raquo;</a></li>
+                {% else %}
+                  <li class="disabled"><span>&raquo;</span></li>
+                {% endif %}
+              </ul>
+        {% endif %}
+    </div>
+
+
+
  </div>
 
 {% endblock %}

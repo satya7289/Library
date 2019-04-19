@@ -51,7 +51,7 @@
                                   <h5 class="card-text ml-3">Total Book: <span class="text-muted">{{ book.total }}</span></h5>
                                   <h5 class="card-text ml-3">Year: <span class="text-muted">{{ book.year }}</span></h5>
                                <div class="offset-md-8">
-                                    <a href=""> <button type="button"  >AddToCart</button></a>
+                                    <a href="{% url 'cart' book_id=book.id %}"> <button type="button"  >AddToCart</button></a>
                                </div>
                               </div>
                             </div>

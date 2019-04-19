@@ -6,9 +6,9 @@
 {% block css %}
 
 #first {
-  height: 650px;
+  height: 670px;
   width: 100%;
-  background-image: url("{% static 'images/background.jpg' %}");
+  background-image: url("{% static 'images/frontPage.jpg' %}");
   background-size:cover;
   margin-bottom:10px;
 }
@@ -31,25 +31,23 @@ input {
 
 <!--        <div class="container  registration" >-->
             <div class="container " >
-            <p style="font-size:60px;">{{ user_type }} Registration</p>
+                <p style="font-size:60px;"><u>{{ user_type }} Registration</u></p>
 
                 <form method="post" action="" enctype="multipart/form-data" >
                     <div class="form-row">
-                 {% csrf_token %}
-                {% for field in form %}
-                         <div class="form-group col-sm-6">
-                            <p> <label >{{ field.label_tag }} &nbsp</label> {{ field }} </p>
-                        </div>
-                {% endfor %}
-           </div>
+                        {% csrf_token %}
+                        {% for field in form %}
+                                 <div class="form-group col-sm-6">
+                                    <p> <label  style="font-size:30px;">{{ field.label_tag }} &nbsp</label> {{ field }} </p>
+                                </div>
+                        {% endfor %}
+                    </div>
 
-         <div class="offset-md-10">
-             <p > <button type=submit value="save">Save</button></p>
+                     <div class="offset-md-10">
+                         <p > <button type=submit value="save">Save</button></p>
+                     </div>
                 </form>
-
-
-
-        </div>
+            </div>
  </div>
 
 
