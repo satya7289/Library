@@ -2,9 +2,10 @@
 {% block title %} Book {% endblock %}
 {% block body %}
 <div class="container" style="margin-top:1px; font-family: 'Ubuntu', sans-serif; font-size:20px;background-color: #f2f2f2">
-      <p style="font-size:40px;" class="text-center"><label>Total Books: &nbsp</label> {{ books|length }} </p>
+    {% if books %}
+    <p style="font-size:40px;" class="text-center"><label>Total Books: &nbsp</label> {{ books|length }} </p>
 
-                 <div class="row">
+    <div class="row">
                      <div class=" offset-md-2" >
                          <form method='GET' action="{% url 'search_book' %}">
 
@@ -16,7 +17,7 @@
                         <a href="{% url 'register_book' %}"> <button id="addbook"  >Add Book</button></a>
                      </div>
                  </div>
-       <div>
+    <div>
               {% if messages %}
               <ul class="message">
                   {% for k in messages %}
@@ -26,7 +27,7 @@
               {% endif %}
       </div>
 
-        <table class="table" style="margin-top:10px;">
+    <table class="table" style="margin-top:10px;">
               <thead>
                     <tr>
 <!--                      <th scope="col">S.no</th>-->
@@ -98,6 +99,11 @@
         {% endif %}
     </div>
 
+    {% else %}
+      <div class="offset-md-4 mt-2">
+         <h3>No Books available</h3>
+     </div>
+    {% endif %}
 </div>
 
 

@@ -74,10 +74,10 @@ td.columnB {
   </li>
      {% if user.is_authenticated and user.is_student %}
    <li   class="nav-item">
-    <a class="nav-link" href="#">Checkout</a>
+    <a class="nav-link" href="{% url 'cart' %}">Cart</a>
   </li>
   <li   class="nav-item">
-    <a class="nav-link" href="#">Books</a>
+    <a class="nav-link" href="{% url 'student_book' %}">Books</a>
   </li>
 
    <li class="nav-item">
