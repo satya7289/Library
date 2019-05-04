@@ -14,5 +14,5 @@ class Cart(models.Model):
     User = models.ForeignKey(Student, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.UserId.user.username
+        return self.User.user.username
 

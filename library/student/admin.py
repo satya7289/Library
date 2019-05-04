@@ -1,7 +1,10 @@
 from django.contrib import admin
 from .models import Cart
 
-admin.site.register(Cart)
-# # admin.site.register(CheckoutBook)
-#
 
+class CartAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'CheckIn', 'CheckOut')
+    list_filter = ('CheckIn', 'CheckOut')
+
+
+admin.site.register(Cart, CartAdmin)
