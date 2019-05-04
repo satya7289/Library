@@ -168,7 +168,6 @@ class AddToCartView(View):
         return success
 
 
-
     def last_row_insert_sql(self):
         cursor = connection.cursor()
         cursor.execute("SELECT LAST_INSERT_ROWID()")
@@ -208,11 +207,14 @@ class CartView(View):
     def get(self, request, *args, **kwargs):
         student = Student.objects.get(user=request.user)
         cart = search_user_cart_sql(student.user_id, 0, 0)
-        cart_id = cart[0][0]
-        books = self.search_book_according_to_cart(cart_id)
-        # print(cart_id)
-        # print(books)
-        return render(self.request, self.template_name, context={self.context_name: books})
+        try:
+            cart_id = cart[0][0]
+            books = self.search_book_according_to_cart(cart_id)
+            # print(cart_id)
+            # print(books)
+            return render(request, self.template_name, context={self.context_name: books})
+        except:
+            return render(request, self.template_name)
 
 
 @method_decorator([login_required, student_required, ], name='dispatch')
@@ -249,25 +251,28 @@ class CheckInView(View):
 
 @method_decorator([login_required, student_required, ], name='dispatch')
 class BookView(View):
-    # template_name = 'student/book.html'
-    # context_name = 'books'
-    #
-    # def search_book_according_to_cart(self, card_id):
-    #     cursor = connection.cursor()
-    #     cursor.execute("SELECT book_no,subject,title,author,total,year,CoverPicture,BookPDF FROM manager_book "
-    #                    "JOIN student_cart_Book ON manager_book.id=student_cart_Book.book_id WHERE cart_id=%s",
-    #                    [card_id])
-    #     row = cursor.fetchall()
-    #     return row
-    #
-    # def get(self, request, *args, **kwargs):
-    #     student = Student.objects.get(user=request.user)
-    #     cart = search_user_cart_sql(student.user_id, 0, 1)
-    #     cart_id = cart[0][0]
-    #     books = self.search_book_according_to_cart(cart_id)
-    #     # print(cart_id)
-    #     # print(books)
-    #     return render(self.request, self.template_name, context={self.context_name: books})
-    pass
+    template_name = 'student/book.html'
+    context_name = 'books'
+
+    def search_book_according_to_cart(self, card_id):
+        cursor = connection.cursor()
+        cursor.execute("SELECT book_no,subject,title,author,total,year,CoverPicture,BookPDF FROM manager_book "
+                       "JOIN student_cart_Book ON manager_book.id=student_cart_Book.book_id WHERE cart_id=%s",
+                       [card_id])
+        row = cursor.fetchall()
+        return row
+
+    def get(self, request, *args, **kwargs):
+        student = Student.objects.get(user=request.user)
+        cart = search_user_cart_sql(student.user_id, 0, 1)
+        try:
+            cart_id = cart[0][0]
+            books = self.search_book_according_to_cart(cart_id)
+            # print(cart_id)
+            # print(books)
+            return render(request, self.template_name, context={self.context_name: books})
+        except:
+            return render(request, self.template_name)
+
 
 
