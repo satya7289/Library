@@ -1,5 +1,5 @@
 {% extends 'student/home.html' %}
-{% block title %} Student CheckOut Book {% endblock %}
+{% block title %} Student Book {% endblock %}
 {% block body %}
 {% load static %}
 
@@ -7,34 +7,58 @@
 
 <div class="container" style="margin-top:1px; font-family: 'Ubuntu', sans-serif; font-size:20px;background-color: #f2f2f2">
 
-    <p style="font-size:40px;" class="text-center"><label>Total Books: &nbsp</label> {{ books|length }} </p>
+    {% if books %}
+     <div class="row justify-content-start">
+        <div class="col-2">
+
+        </div>
+        <div class="col-10">
+            {% for book in books %}
+                 <div class="card ml-5 mt-1" style="max-width: 800px;">
+                      <div class="row no-gutters">
+                            <div class="col-md-4">
+                                 <div class="container">
+                                    {% if book.CoverPicture  %}
+                                       <img src="/media/{{book.CoverPicture }} " alt="" class="img-thumbnail card-img mt-2">
+                                         {% else %}
+                                       <img src="{% static 'images/background.jpg' %}" alt="" class="img-thumbnail card-img mt-2">
+                                     {% endif %}
+                                     {% if book.BookPDF  %}
+                                         <div style="margin-left:40%;"><span>{{ book.BookPDF}}</span></div>
+                                     {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                              <div class="card-body">
+<!--                                <h5 class="card-title"></h5>-->
+                                  <h5 class="card-text ml-3">Book_No: <span class="text-muted">{{ book.book_no }}</span></h5>
+                                  <h5 class="card-text ml-3">Subject: <span class="text-muted">{{ book.subject }}</span></h5>
+                                  <h5 class="card-text ml-3">Title: <span class="text-muted">{{ book.title }}</span></h5>
+                                  <h5 class="card-text ml-3">Author: <span class="text-muted">{{ book.author }}</span></h5>
+                                  <h5 class="card-text ml-3">Total Book: <span class="text-muted">{{ book.total }}</span></h5>
+                                  <h5 class="card-text ml-3">Year: <span class="text-muted">{{ book.year }}</span></h5>
+                               <div class="offset-md-8">
+                                    <a href="#"> <button type="button"  >Remove</button></a>
+                               </div>
+                              </div>
+                            </div>
+                      </div>
+                </div>
+            {% endfor %}
+
+         </div>
 
 
-    <table class="table" style="margin-top:10px;">
-              <thead>
-                    <tr>
-<!--                      <th scope="col">S.no</th>-->
-                      <th scope="col">Book_No</th>
-                      <th scope="col">Subject</th>
-                      <th scope="col">Title</th>
-                      <th scope="col">Detail</th>
-                      <th scope="col">Total</th>
-                    </tr>
-              </thead>
-              <tbody>
-               {% for book in books %}
-                   <tr>
-<!--                      <th scope="row">{{ forloop.counter }}</th>-->
-                      <td>{{ book.book_no }}</td>
-                      <td>{{ book.subject }}</td>
-                      <td>{{ book.title }}</td>
-                      <td>{{ book.total}}</td>
-                    </tr>
-               {% endfor %}
+         <div class="offset-md-10">
+             <a href="{% url 'checkIn_book' %}"> <button type="button"  >CheckIn</button></a>
+         </div>
 
-              </tbody>
-        </table>
-
+     </div>
+    {% else %}
+     <div class="offset-md-4 mt-2">
+         <h3>You does not have any book</h3>
+     </div>
+    {% endif %}
 
 </div>
 
