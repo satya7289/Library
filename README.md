@@ -4,15 +4,30 @@ Library Management Portal.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development.
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
+Things which is needed to install the software
+<br />
+``
+python==3.7.3
+``<br />
+``
+pip==18.1
+`` <br />
+``
+django==2.1.7
+``<br />
+``
+djangorestframework==3.9.2
+``<br />
+``
+Pillow
+``<br />
+``
+Bootstrap
+``
 
 ### How to install it
 Steps to get start with this ->
@@ -21,15 +36,15 @@ Steps to get start with this ->
    >  3. Clone to the local machine .
    >  4. For getting started with this environment follow these steps.
 
-For ubuntu/linux <br />
-    `git clone https://github.com/satya7289/Library.git` <br />
-    `cd library` <br />
+For ubuntu/linux<br />
+    `git clone https://github.com/satya7289/Library.git`<br />
+    `cd library`<br />
     `pip3 install -r requirements.txt`<br />
     `python3 manage.py makemigrations`<br />
-    `python3 manage.py migrate` <br />
+    `python3 manage.py migrate`<br />
     `python3 manage.py runserver`<br />
    
-For windows <br />
+For windows<br />
    `git clone https://github.com/satya7289/Library.git`<br />
    `cd library`<br />
    `pip3 install -r requirements.txt`<br />
@@ -39,13 +54,13 @@ For windows <br />
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+* [Django](https://www.djangoproject.com/) - The web framework used
+* [Bootstrap](https://getbootstrap.com/) - Frontend
+* [DjangoRestFramework](https://www.django-rest-framework.org/) - For API
 
 ## Authors
 
-* **Satya Prakash Sharma** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Satya Prakash Sharma** 
 
 ## Description
 
