@@ -64,4 +64,19 @@ For windows<br />
 
 ## Description
 
-* ..
+* Customized Different types of users and permission.
+* RESTful API is written using DjangoRestFramework to expose important data to other applications.
+* Implemented Search, Delete, Update, Create feature for all model.
+
+## Credentials
+* Superuser <br/>
+```username```: `s`<br/>
+```password```: `123123`<br/>
+
+* Student <br/>
+```username```: `saaa`<br/>
+```password```: `sp855107`<br/>
+
+* Manager <br/>
+```username```: `satya`<br/>
+```password```: `sp855107`<br/>
